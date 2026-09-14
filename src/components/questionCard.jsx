@@ -1,8 +1,57 @@
 "use client";
+import { useDispatch, useSelector } from "react-redux";
 import AnswerCard from "./answerCard";
 import NextQuestionButton from "./nextQuestionButton";
+import {
+  incrementScore,
+  nextQuestion,
+  setSelectedAnswer,
+} from "@/redux/quizSlice";
+import { useState } from "react";
+import FeedbackCard from "./FeedbackCard";
 
-export default function QuestionCard({ question, onNext, selected, onSelect }) {
+export default function QuestionCard({ question, currentQuestion, setScreen }) {
+  const [showFeedback, setShowFeedback] = useState(false);
+  const selectedAnswer = useSelector((state) => state.quiz.selectedAnswer);
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+
+  const handleNextQuestion = () => {
+    if (!selectedAnswer) {
+      setError("Please select an answer.");
+      return;
+    }
+
+    setError("");
+
+    if (selectedAnswer === question.correctAnswer) {
+      dispatch(incrementScore());
+    }
+
+    setShowFeedback(true);
+  };
+  const handleContinue = () => {
+    setShowFeedback(false);
+
+    if (currentQuestion === question.total - 1) {
+      setScreen("result");
+      return;
+    }
+
+    dispatch(nextQuestion());
+  };
+  if (showFeedback) {
+    const isCorrect = selectedAnswer === question.correctAnswer;
+
+    return (
+      <FeedbackCard
+        isCorrect={isCorrect}
+        handleContinue={handleContinue}
+        question={question}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col justify-between min-h-[500px] mt-8 rounded-3xl border border-[#24463A] bg-[#0D211A] p-8 lg:p-10">
       <h2 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight">
@@ -16,14 +65,16 @@ export default function QuestionCard({ question, onNext, selected, onSelect }) {
             <AnswerCard
               key={option}
               option={option}
-              // isSelected={isSelected}
-              selected={selected === option}
-              onSelect={() => onSelect(option)}
+              selected={selectedAnswer === option}
+              onSelect={() => dispatch(setSelectedAnswer(option))}
             />
           );
         })}
       </div>
-      <NextQuestionButton onClick={onNext} />
+      {error && (
+        <p className="mt-3 text-center text-sm text-[#FF5C5C]">{error}</p>
+      )}
+      <NextQuestionButton onClick={handleNextQuestion} text={"Check Answer"} />
     </div>
   );
 }

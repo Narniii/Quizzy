@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Clock3, LineChart, Timer } from "lucide-react";
@@ -6,18 +5,11 @@ import ProgressBar from "./progressBar";
 import QuestionCard from "./questionCard";
 import questions from "@/data/questions.json";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-export default function QuizSection({ onNextQuestion, onCorrect, onWrong }) {
-  const [selected, setSelected] = useState(null);
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+export default function QuizSection({ setScreen }) {
+  const currentQuestion = useSelector((state) => state.quiz.currentQuestion);
   const question = questions[currentQuestion];
-  const handleNextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-      setSelected(null);
-    }
-  };
 
   return (
     <div className="flex-1 min-w-0 relative overflow-hidden">
@@ -35,12 +27,7 @@ export default function QuizSection({ onNextQuestion, onCorrect, onWrong }) {
             <p>00:24</p>
           </div>
         </div>
-        <QuestionCard
-          onSelect={setSelected}
-          selected={selected}
-          question={question}
-          onNext={handleNextQuestion}
-        />
+        <QuestionCard setScreen={setScreen} question={question} currentQuestion={currentQuestion} />
       </div>
     </div>
   );

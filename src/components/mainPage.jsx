@@ -12,7 +12,7 @@ export default function Main() {
   const [quizState, setQuizState] = useState("answering");
 
   return (
-    <div className=" overflow-hidden rounded-xl mx-auto max-w-6xl flex border border-[#24463A] bg-[#081811]">
+    <div className="w-full h-full overflow-hidden rounded-xl mx-auto max-w-6xl flex border border-[#24463A] bg-[#081811]">
       <SideBar
         onExit={() => setScreen("login")}
         screen={screen}
@@ -23,13 +23,7 @@ export default function Main() {
       {screen === "login" && <Login onStart={() => setScreen("quiz")} />}
       {screen === "settings" && <Settings onStart={() => setScreen("quiz")} />}
 
-      {screen === "quiz" && (
-        <QuizSection
-          onCorrect={() => setQuizState("correct")}
-          onWrong={() => setQuizState("wrong")}
-          onNextQuestion={() => setQuizState("answering")}
-        />
-      )}
+      {screen === "quiz" && <QuizSection setScreen={setScreen} />}
       {screen === "quiz" && (
         <div className="relative hidden w-30 shrink-0 lg:block">
           <div className="absolute -right-20 top-50 h-[200px] w-[200px] -translate-y-1/2 rounded-full bg-[#FF8A2A] hover:scale-110 hover:rotate-6 hover:shadow-[0_0_60px_rgba(255,138,42,0.25)] transition-all duration-200">
