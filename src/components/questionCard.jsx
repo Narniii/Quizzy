@@ -17,13 +17,15 @@ export default function QuestionCard({
   currentQuestion,
   setScreen,
   timeLeft,
+  setTimerRunning,
+  handleNextQuestion,
 }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const selectedAnswer = useSelector((state) => state.quiz.selectedAnswer);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
 
-  const handleNextQuestion = () => {
+  const handleCheckQuestion = () => {
     if (!selectedAnswer) {
       setError("Please select an answer.");
       return;
@@ -34,7 +36,7 @@ export default function QuestionCard({
     if (selectedAnswer === question.correctAnswer) {
       dispatch(incrementScore());
     }
-
+    setTimerRunning(false);
     setShowFeedback(true);
   };
   const handleContinue = () => {
@@ -44,9 +46,11 @@ export default function QuestionCard({
       setScreen("result");
       return;
     }
+
     dispatch(setSelectedAnswer(null));
-    dispatch(nextQuestion());
+    handleNextQuestion();
   };
+
   if (showFeedback) {
     const isCorrect = selectedAnswer === question.correctAnswer;
 
@@ -83,7 +87,7 @@ export default function QuestionCard({
       {error && (
         <p className="mt-3 text-center text-sm text-[#FF5C5C]">{error}</p>
       )}
-      <NextQuestionButton onClick={handleNextQuestion} text={"Check Answer"} />
+      <NextQuestionButton onClick={handleCheckQuestion} text={"Check Answer"} />
     </div>
   );
 }

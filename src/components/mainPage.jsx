@@ -8,14 +8,21 @@ import Login from "./Login";
 import ResultPage from "./Result";
 import Settings from "./settings";
 import TimeUp from "./timeUp";
+import { useDispatch } from "react-redux";
+import { resetQuiz } from "@/redux/quizSlice";
 export default function Main() {
   const [screen, setScreen] = useState("login");
   const [quizState, setQuizState] = useState("answering");
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(resetQuiz());
+    setScreen("login");
+  };
   return (
     <div className="w-full h-full overflow-hidden rounded-xl mx-auto max-w-6xl flex border border-[#24463A] bg-[#081811]">
       <SideBar
-        onExit={() => setScreen("login")}
+        onExit={handleLogout}
         screen={screen}
         onQuiz={() => setScreen("quiz")}
         onSettings={() => setScreen("settings")}

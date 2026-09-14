@@ -4,16 +4,20 @@ import { Clock3, LineChart, Timer } from "lucide-react";
 import ProgressBar from "./progressBar";
 import QuestionCard from "./questionCard";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TimeUp from "./timeUp";
+import { nextQuestion } from "@/redux/quizSlice";
 
 export default function QuizSection({ setScreen }) {
   const QUESTION_TIME = 30;
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME);
+  const [timerRunning, setTimerRunning] = useState(true);
   const currentQuestion = useSelector((state) => state.quiz.currentQuestion);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeLeft(QUESTION_TIME);
   }, [currentQuestion]);
@@ -41,7 +45,7 @@ export default function QuizSection({ setScreen }) {
   const question = questions[currentQuestion];
 
   useEffect(() => {
-    if (loading || !question) return;
+    if (loading || !question || !timerRunning) return;
 
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
@@ -54,7 +58,13 @@ export default function QuizSection({ setScreen }) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [currentQuestion, loading, question]);
+  }, [currentQuestion, loading, question, timerRunning]);
+
+  const handleNextQuestion = () => {
+    setTimeLeft(QUESTION_TIME);
+    setTimerRunning(true);
+    dispatch(nextQuestion());
+  };
 
   if (loading) {
     return (
@@ -88,7 +98,10 @@ export default function QuizSection({ setScreen }) {
             <p className="text-sm font-medium text-[#A8B4AD]">
               Question {question.id} of {questions.length}
             </p>
-            <ProgressBar question={question} totalQuestions={questions.length}/>
+            <ProgressBar
+              question={question}
+              totalQuestions={questions.length}
+            />
           </div>
           <div className="flex items-center justify-center gap-2">
             <Clock3 className="text-[#FF8A2A]" />
@@ -96,11 +109,13 @@ export default function QuizSection({ setScreen }) {
           </div>
         </div>
         <QuestionCard
+          setTimerRunning={setTimerRunning}
           totalQuestions={questions.length}
           setScreen={setScreen}
           question={question}
           currentQuestion={currentQuestion}
           timeLeft={timeLeft}
+          handleNextQuestion={handleNextQuestion}
         />
       </div>
     </div>
