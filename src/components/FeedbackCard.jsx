@@ -14,7 +14,7 @@ export default function FeedbackCard({ isCorrect, question, handleContinue }) {
   return (
     <>
       {isCorrect ? (
-        <div className="mt-6 flex min-h-0 flex-col items-center justify-between rounded-3xl border border-[#24463A] bg-[#0D211A] p-5 sm:mt-8 sm:p-7 lg:p-10">
+        <div className="flex-1 mt-6 flex min-h-0 flex-col items-center justify-center rounded-3xl border border-[#24463A] bg-[#0D211A] p-5 sm:mt-8 sm:p-7 lg:p-10">
           <CheckCircle stroke="green" width={100} height={100} />
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight">
             Correct!

@@ -66,7 +66,7 @@ export default function QuestionCard({
     return <TimeUp handleContinue={handleContinue} />;
   }
   return (
-    <div className="mt-6 flex min-h-0 flex-col justify-between rounded-3xl border border-[#24463A] bg-[#0D211A] p-5 sm:mt-8 sm:p-7 lg:p-10">
+    <div className="overflow-x-hidden overflow-y-auto flex-1 mt-6 flex min-h-0 flex-col justify-between rounded-3xl border border-[#24463A] bg-[#0D211A] p-5 sm:mt-8 sm:p-7 lg:p-10">
       <h2 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight">
         {question.question}
       </h2>

@@ -90,8 +90,8 @@ export default function QuizSection({ setScreen }) {
     );
   }
   return (
-    <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
-      <div className="mx-auto flex w-full max-w-4xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden ">
+      <div className="mx-auto flex w-full max-w-4xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 h-full">
         {/* top content */}
         <div className="flex items-center justify-between gap-3">
           <div className="w-full flex flex-col">
