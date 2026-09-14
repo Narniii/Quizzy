@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={manrope.className}>
-      <body className="min-h-screen bg-[#06130F] text-[#F4F1E8] py-6 min-w-screen flex justify-center items-center">
+      <body className="min-h-screen w-full bg-[#06130F] text-[#F4F1E8] flex items-center justify-center">
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>

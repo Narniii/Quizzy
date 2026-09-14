@@ -66,11 +66,11 @@ export default function QuestionCard({
     return <TimeUp handleContinue={handleContinue} />;
   }
   return (
-    <div className="flex flex-col justify-between min-h-[500px] mt-8 rounded-3xl border border-[#24463A] bg-[#0D211A] p-8 lg:p-10">
+    <div className="mt-6 flex min-h-0 flex-col justify-between rounded-3xl border border-[#24463A] bg-[#0D211A] p-5 sm:mt-8 sm:p-7 lg:p-10">
       <h2 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight">
         {question.question}
       </h2>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-8">
         {question.options.map((option) => {
           // const isSelected = question.correctAnswer === option;
 

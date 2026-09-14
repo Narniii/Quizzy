@@ -1,67 +1,131 @@
-import { CircleHelp, Leaf, LogOut, Settings } from "lucide-react";
+import { CircleHelp, LogOut, Settings } from "lucide-react";
 import Image from "next/image";
 
 export default function SideBar({ onExit, screen, onQuiz, onSettings }) {
+  const isLoggedIn = screen === "quiz" || screen === "settings";
+
   return (
-    <div className="w-64 shrink-0 flex flex-col border-r border-[#24463A] bg-[#0D211A] p-6">
-      <div className="flex items-left gap-3 mb-12 flex-col ">
+    <aside
+      className="
+        shrink-0 border-[#24463A] bg-[#0D211A]
+
+        /* mobile */
+        flex h-16 w-full flex-row items-center justify-between
+        border-b px-4
+
+        /* tablet */
+        sm:h-screen sm:w-30 sm:flex-col sm:justify-start sm:border-b-0
+        sm:border-r sm:px-3 sm:py-5
+
+        /* desktop */
+        lg:w-64 lg:px-6 lg:py-6 lg:h-full
+      "
+    >
+      {/* Logo */}
+      <div
+        className="
+          flex items-center
+
+          sm:mb-8
+          lg:flex-col lg:items-start lg:mb-12 lg:w-full
+        "
+      >
         <div className="text-2xl font-bold tracking-tight text-[#FF8A2A]">
           Quizzy
         </div>
-        <p>
-          small questions, <br /> big knowledge.
+
+        <p className="hidden lg:block mt-1">
+          small questions, <br />
+          big knowledge.
         </p>
       </div>
 
-      {/* loggedIn nav */}
-      {screen == "quiz" || screen == "settings" ? (
-        <div className="flex flex-col gap-2 my-12">
-          <div
+      {/* Navigation */}
+      {isLoggedIn && (
+        <nav
+          className="
+            flex gap-1
+
+            sm:flex-col sm:w-full sm:gap-2 
+
+            lg:my-12
+          "
+        >
+          {/* Quiz */}
+          <button
             onClick={onQuiz}
-            className={`cursor-pointer flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-semibold transition-all duration-200 ${
-              screen == "quiz"
-                ? "bg-[#FF8A2A]/10 text-[#FF8A2A]"
-                : "text-[#A8B4AD] hover:bg-[#132A21] hover:text-[#F4F1E8]"
-            }`}
+            className={`
+              flex cursor-pointer items-center justify-center
+              rounded-3xl p-3 transition-all duration-200
+
+              lg:justify-start lg:gap-3 lg:px-4 lg:py-3
+
+              ${
+                screen === "quiz"
+                  ? "bg-[#FF8A2A]/10 text-[#FF8A2A]"
+                  : "text-[#A8B4AD] hover:bg-[#132A21] hover:text-[#F4F1E8]"
+              }
+            `}
           >
-            <CircleHelp />
-            <p>Quiz</p>
-          </div>
-          <div
+            <CircleHelp size={20} />
+
+            <span className="hidden lg:block text-sm font-semibold">Quiz</span>
+          </button>
+
+          {/* Settings */}
+          <button
             onClick={onSettings}
-            className={`cursor-pointer flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-semibold transition-all duration-200 ${
-              screen == "settings"
-                ? "bg-[#FF8A2A]/10 text-[#FF8A2A]"
-                : "text-[#A8B4AD] hover:bg-[#132A21] hover:text-[#F4F1E8]"
-            }`}
+            className={`
+              flex cursor-pointer items-center justify-center
+              rounded-3xl p-3 transition-all duration-200
+
+              lg:justify-start lg:gap-3 lg:px-4 lg:py-3
+
+              ${
+                screen === "settings"
+                  ? "bg-[#FF8A2A]/10 text-[#FF8A2A]"
+                  : "text-[#A8B4AD] hover:bg-[#132A21] hover:text-[#F4F1E8]"
+              }
+            `}
           >
-            <Settings />
-            <p>Settings</p>
-          </div>
-          <div
+            <Settings size={20} />
+
+            <span className="hidden lg:block text-sm font-semibold">
+              Settings
+            </span>
+          </button>
+
+          {/* Exit */}
+          <button
             onClick={onExit}
-            className="cursor-pointer flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-semibold text-[#A8B4AD] transition-all duration-200 hover:bg-[#132A21] hover:text-[#F4F1E8]"
+            className="
+              flex cursor-pointer items-center justify-center
+              rounded-3xl p-3 text-[#A8B4AD]
+              transition-all duration-200
+              hover:bg-[#132A21] hover:text-[#F4F1E8]
+
+              lg:justify-start lg:gap-3 lg:px-4 lg:py-3
+            "
           >
-            <LogOut />
-            <p>Exit</p>
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-2 my-12 h-[160px]" />
+            <LogOut size={20} />
+
+            <span className="hidden lg:block text-sm font-semibold">Exit</span>
+          </button>
+        </nav>
       )}
 
-      {/* decoration */}
-      <div className="relative hidden w-30 shrink-0 lg:block">
-        <div className="absolute -right-0 top-50 h-[200px] w-[200px] -translate-y-1/2 rounded-full bg-[#FF8A2A] hover:scale-110 hover:rotate-6 hover:shadow-[0_0_60px_rgba(255,138,42,0.25)] transition-all duration-200">
+      {/* Decoration */}
+      {/* <div className="relative hidden flex-1 w-full lg:block">
+        <div className="absolute -right-6 top-1/2 h-[160px] w-[160px] -translate-y-1/2 rounded-full bg-[#FF8A2A] transition-all duration-200 hover:scale-110 hover:rotate-6 hover:shadow-[0_0_60px_rgba(255,138,42,0.25)]">
           <Image
-            className="rounded-2xl hover:scale-110 hover:rotate-6 transition-all duration-300"
+            className="rounded-2xl transition-all duration-300 hover:scale-110 hover:rotate-6"
             alt="leaves"
-            width={200}
-            height={200}
-            src={"/images/watermarked-leaves.png"}
+            width={160}
+            height={160}
+            src="/images/watermarked-leaves.png"
           />
         </div>
-      </div>
-    </div>
+      </div> */}
+    </aside>
   );
 }

@@ -39,8 +39,8 @@ export default function Result() {
     submitResult();
   }, [username, score]);
   return (
-    <div className="w-full flex items-center justify-center bg-[#07130f] px-4">
-      <div className="w-full my-12 max-w-lg rounded-3xl bg-[#10231c] p-10 text-center shadow-xl">
+    <div className="flex-1 min-w-0 flex justify-center items-center overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col justify-center items-center mx-auto w-full max-w-4xl px-8 py-10">
         <h1 className="mb-3 text-4xl font-bold text-white">Quiz Completed!</h1>
 
         <p className="mb-8 text-gray-400">Well done, {username}!</p>
@@ -56,10 +56,10 @@ export default function Result() {
           </p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <p className="text-2xl font-semibold text-white">{percentage}%</p>
 
-          <p className="mt-2 text-gray-400">
+          <p className="mt-2 text-gray-400 ">
             {percentage >= 80
               ? "Excellent job! 🎉"
               : percentage >= 60

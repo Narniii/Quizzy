@@ -90,10 +90,10 @@ export default function QuizSection({ setScreen }) {
     );
   }
   return (
-    <div className="flex-1 min-w-0 relative overflow-hidden">
-      <div className="flex flex-col justify-center mx-auto w-full max-w-4xl px-8 py-10">
+    <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <div className="mx-auto flex w-full max-w-4xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         {/* top content */}
-        <div className="gap-5 flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <div className="w-full flex flex-col">
             <p className="text-sm font-medium text-[#A8B4AD]">
               Question {question.id} of {questions.length}
@@ -103,9 +103,11 @@ export default function QuizSection({ setScreen }) {
               totalQuestions={questions.length}
             />
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <Clock3 className="text-[#FF8A2A]" />
-            <p>00:{String(timeLeft).padStart(2, "0")}</p>
+          <div className="flex shrink-0 items-center justify-center gap-2">
+            <Clock3 className="text-[#FF8A2A]" size={18} />
+            <p className="text-sm sm:text-base">
+              00:{String(timeLeft).padStart(2, "0")}
+            </p>
           </div>
         </div>
         <QuestionCard
