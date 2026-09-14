@@ -1,12 +1,43 @@
+"use client";
+
 import { useSelector } from "react-redux";
-import questions from "@/data/questions.json";
+import questions from "@/data/questions";
+import { useEffect } from "react";
 export default function Result() {
   const username = useSelector((state) => state.quiz.username);
   const score = useSelector((state) => state.quiz.score);
-
   const totalQuestions = questions.length;
   const percentage = Math.round((score / totalQuestions) * 100);
 
+  useEffect(() => {
+    async function submitResult() {
+      try {
+        const response = await fetch("/api/results", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            score,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+
+          throw new Error(errorData.error);
+        }
+        const data = await response.json();
+
+        console.log("RESULT FROM BACKEND:", data);
+      } catch (error) {
+        console.error("Error submitting result:", error);
+      }
+    }
+
+    submitResult();
+  }, [username, score]);
   return (
     <div className="w-full flex items-center justify-center bg-[#07130f] px-4">
       <div className="w-full my-12 max-w-lg rounded-3xl bg-[#10231c] p-10 text-center shadow-xl">

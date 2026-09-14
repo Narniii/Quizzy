@@ -7,10 +7,17 @@ import {
   nextQuestion,
   setSelectedAnswer,
 } from "@/redux/quizSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedbackCard from "./FeedbackCard";
+import TimeUp from "./timeUp";
 
-export default function QuestionCard({ question, currentQuestion, setScreen }) {
+export default function QuestionCard({
+  totalQuestions,
+  question,
+  currentQuestion,
+  setScreen,
+  timeLeft,
+}) {
   const [showFeedback, setShowFeedback] = useState(false);
   const selectedAnswer = useSelector((state) => state.quiz.selectedAnswer);
   const dispatch = useDispatch();
@@ -33,11 +40,11 @@ export default function QuestionCard({ question, currentQuestion, setScreen }) {
   const handleContinue = () => {
     setShowFeedback(false);
 
-    if (currentQuestion === question.total - 1) {
+    if (currentQuestion === totalQuestions - 1) {
       setScreen("result");
       return;
     }
-
+    dispatch(setSelectedAnswer(null));
     dispatch(nextQuestion());
   };
   if (showFeedback) {
@@ -51,7 +58,9 @@ export default function QuestionCard({ question, currentQuestion, setScreen }) {
       />
     );
   }
-
+  if (timeLeft === 0) {
+    return <TimeUp handleContinue={handleContinue} />;
+  }
   return (
     <div className="flex flex-col justify-between min-h-[500px] mt-8 rounded-3xl border border-[#24463A] bg-[#0D211A] p-8 lg:p-10">
       <h2 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight">

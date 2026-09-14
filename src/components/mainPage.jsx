@@ -7,6 +7,7 @@ import { useState } from "react";
 import Login from "./Login";
 import ResultPage from "./Result";
 import Settings from "./settings";
+import TimeUp from "./timeUp";
 export default function Main() {
   const [screen, setScreen] = useState("login");
   const [quizState, setQuizState] = useState("answering");
