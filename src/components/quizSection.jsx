@@ -88,7 +88,7 @@ export default function QuizSection({ setScreen }) {
             <p className="text-sm font-medium text-[#A8B4AD]">
               Question {question.id} of {questions.length}
             </p>
-            <ProgressBar question={question} />
+            <ProgressBar question={question} totalQuestions={questions.length}/>
           </div>
           <div className="flex items-center justify-center gap-2">
             <Clock3 className="text-[#FF8A2A]" />
